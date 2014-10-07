@@ -157,25 +157,12 @@ module.exports = function(grunt) {
 
 		fs.writeFileSync(dest_folder + '/mixins-to-classes.scss', all_mixins.join(""), {encoding: 'utf8'});
 		fs.writeFileSync(dest_folder + '/docs.html', res.join(""), {encoding: 'utf8'});
-
-
 		files_to_compile.push(dest_folder + '/mixins-to-classes.scss');
-		var concat_config = {
-			basic: {
-				src: files_to_compile,
-				dest: dest_folder + '/styles.scss',
-			},
-		}
-		//console.log('concat config is', concat_config);
-
 		var destination_css_file = dest_folder + '/styles.css';
 		var sass_config = {dist: {files: {}}};
-		sass_config.dist.files[destination_css_file] = dest_folder + '/styles.scss';
-
-		grunt.config('concat', concat_config);
+		sass_config.dist.files[destination_css_file] = files_to_compile;
+		
 		grunt.config('sass', sass_config);
-
-		grunt.task.run('concat');
 		grunt.task.run('sass');
 
 	});
