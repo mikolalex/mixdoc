@@ -159,14 +159,5 @@ module.exports = function(grunt) {
 
 		fs.writeFileSync(dest_folder + '/mixins-to-classes.scss', all_mixins.join(""), {encoding: 'utf8'});
 		fs.writeFileSync(dest_folder + '/index.html', res.join(""), {encoding: 'utf8'});
-		files_to_compile.push(dest_folder + '/mixins-to-classes.scss');
-		var destination_css_file = dest_folder + '/styles.css';
-		var sass_config = {dist: {files: {}}};
-		sass_config.dist.files[destination_css_file] = files_to_compile;
-		
-		grunt.config('sass', sass_config);
-                console.log('Running sass task with config:', files_to_compile);
-		grunt.task.run('sass');
-
 	});
 };
