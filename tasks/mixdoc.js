@@ -72,9 +72,14 @@ module.exports = function(grunt) {
 							}
                                                         var parts = obj.descr.match(/((.|\n(?!\n))*(\n\n|$))/g);
                                                         if(parts && parts.length > 1){
-                                                            obj.descr = parts[1];
-                                                            obj.title = parts[0];
-                                                            obj.code = parts[2];
+                                                            if(parts.length > 2){
+                                                                obj.descr = parts[1];
+                                                                obj.title = parts[0];
+                                                                obj.code = parts[2];
+                                                            } else {
+                                                                obj.descr = parts[0];
+                                                                obj.code = parts[1];
+                                                            }
                                                         }
                                                         //console.log('parts are', parts);
 							active.push(obj);
@@ -147,7 +152,7 @@ module.exports = function(grunt) {
 		}
 
 		//console.log('files_to_search_mixins', files_to_search_mixins);
-		var all_mixins = [];
+		var all_mixins = ['@import "./style/main.scss";'];
 		files_to_search_mixins.forEach(function(filename) {
 			var content = fs.readFileSync(filename, {encoding: 'utf8'});
 			if (content) {
@@ -161,6 +166,7 @@ module.exports = function(grunt) {
 				})
 			}
 		})
+                console.log('Found mixins', all_mixins);
 
 		fs.writeFileSync(dest_folder + '/mixins-to-classes.scss', all_mixins.join(""), {encoding: 'utf8'});
 		fs.writeFileSync(dest_folder + '/index.html', res.join(""), {encoding: 'utf8'});
