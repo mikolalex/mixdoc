@@ -85,6 +85,7 @@ module.exports = function(grunt) {
 
 		var list_files_and_dirs = function(path) {
 			var files = fs.readdirSync(path);
+                        if(!files) return;
 			files.forEach(function(file_or_folder) {
 				var new_path = path + '/' + file_or_folder;
 				if (fs.lstatSync(new_path).isDirectory()) {
@@ -101,7 +102,7 @@ module.exports = function(grunt) {
 		for (var i in files_to_parse) {
 			files_to_parse[i]();
 		}
-		//console.log('tokens are', tokens);
+		console.log('Found', tokens.length, 'annotations');
 
 		// Generating actual HTML
 
@@ -112,9 +113,9 @@ module.exports = function(grunt) {
 	.doc-mixin { clear: both;} \n\
 	.doc-mixin > * {box-sizing: border-box; float:left;padding: 40px;} \n\
 	h2 { text-transform: capitalize; margin-left:40px;font-weight: normal;font-size: 30px;} \n\
-	.mixin { width: 20%;box-sizing: border-box;margin: 0px;} \n\
+	.mixin { width: 30%;box-sizing: border-box;margin: 0px;} \n\
 	.mixin span {background-color: #FF4F00;color: white; padding: 5px;font-weight: normal;font-size: 20px;}\n\
-	.doc-description { width:80%; border-left:1px solid grey;}  \n\
+	.doc-description { width:70%; border-left:1px solid grey;}  \n\
 	.doc-code { } \n\
 </style>');
 		res.push('<div class="wrapper">');
@@ -147,6 +148,7 @@ module.exports = function(grunt) {
 			if (content) {
 				var mixins = content.match(/\@mixin\s([^\(]*)(?:\s?)([^\{]*)/g);
 				//console.log('FOund mixins', mixins);
+                                if(!mixins) return;
 				mixins.forEach(function(mx){
 					var mixin = mx.match(/\@mixin\s([^\(]*)(?:\s?)([^\{]*)/i);
 					var mixin_name = mixin[1];
@@ -156,13 +158,14 @@ module.exports = function(grunt) {
 		})
 
 		fs.writeFileSync(dest_folder + '/mixins-to-classes.scss', all_mixins.join(""), {encoding: 'utf8'});
-		fs.writeFileSync(dest_folder + '/docs.html', res.join(""), {encoding: 'utf8'});
+		fs.writeFileSync(dest_folder + '/index.html', res.join(""), {encoding: 'utf8'});
 		files_to_compile.push(dest_folder + '/mixins-to-classes.scss');
 		var destination_css_file = dest_folder + '/styles.css';
 		var sass_config = {dist: {files: {}}};
 		sass_config.dist.files[destination_css_file] = files_to_compile;
 		
 		grunt.config('sass', sass_config);
+                console.log('Running sass task with config:', files_to_compile);
 		grunt.task.run('sass');
 
 	});
