@@ -69,10 +69,10 @@ module.exports = function (grunt) {
                         }
                     })
                 }
-                var long_comments = content.match(/(\n|\r)\/\*([^\*]*)\*\/(\n|\r|\s*?)\@mixin\s([^\(]*)(?:\s?)([^\{]*)/g);
+                var long_comments = content.match(/(\n|\r|^)\/\*([^\*]*)\*\/(\n|\r|\s*?)\@mixin\s([^\(]*)(?:\s?)([^\{]*)/g);
                 if (long_comments) {
                     long_comments.forEach(function (str) {
-                        var pieces = str.match(/(?:\n|\r)\/\*([^\*]*)\*\/(?:\n|\r|\s*?)\@mixin\s([^\(^\{]*)(?:\s?)([^\{]*)/i);
+                        var pieces = str.match(/(?:\n|\r|^)\/\*([^\*]*)\*\/(?:\n|\r|\s*?)\@mixin\s([^\(^\{]*)(?:\s?)([^\{]*)/i);
                         //console.log('pieces are', pieces);
                         //console.log('---------------------');
                         //return;
