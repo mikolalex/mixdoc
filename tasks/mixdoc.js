@@ -163,7 +163,7 @@ module.exports = function (grunt) {
                         \n\
          }\n\
 menu > li a { color: white; background-color: grey;text-decoration: none;}\n\
-	.wrapper { width: 1200px; margin: auto; margin-top: -1px; overflow: hidden;}\n\
+	.wrapper { max-width: 1200px; margin: auto; margin-top: -1px; overflow: hidden;}\n\
 	.doc-mixin { clear: both;border-top:1px solid grey;} \n\
 	.doc-mixin > * {box-sizing: border-box; float:left;padding: 10px 0px;} \n\
         pre {margin: auto;} \n\
