@@ -1,7 +1,7 @@
 {
   "name": "grunt-mixdoc",
   "description": "Plugin that creates documentation on SASS mixins",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "homepage": "https://github.com/mikolalex/mixdoc",
   "author": {
     "name": "mikolalex",
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "grunt-contrib-sass": "^0.1.0",
+    "grunt-contrib-concat": "^0.1.0",
     "grunt": "~0.4.5"
   },
   "peerDependencies": {
